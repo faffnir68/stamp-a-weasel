@@ -1,0 +1,13 @@
+.btn-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.btn-list button {
+    border: 1px solid lightblue;
+    color: antiquewhite;
+    background: lightblue;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px;
+}

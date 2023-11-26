@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import liff from "@line/liff";
+import Login from './components/Login'
+import Logout from './components/Logout'
+import CustomAction from './components/CustomAction'
+import Scan from './components/Scan'
+import ServiceMessage from './components/ServiceMessage'
+import ShareTargetPicker from './components/ShareTargetPicker'
 import "./App.css";
+import "./index.css";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -22,20 +29,46 @@ function App() {
 
   return (
     <div className="App">
-      <h1>create-liff-app</h1>
-      {message && <p>{message}</p>}
-      {error && (
-        <p>
-          <code>{error}</code>
-        </p>
-      )}
-      <a
-        href="https://developers.line.biz/ja/docs/liff/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        LIFF Documentation
-      </a>
+      <div className="original-app">
+        <h1>create-liff-app</h1>
+        {message && <p>{message}</p>}
+        {error && (
+          <p>
+            <code>{error}</code>
+          </p>
+        )}
+        <a
+          href="https://developers.line.biz/ja/docs/liff/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          LIFF Documentation
+        </a>
+
+      </div>
+      <div className="test">
+        <h2>Starting from nothing</h2>
+        <div className="btn-list">
+          <button className="" onClick={Login}>
+          Login
+          </button>
+          <button className="" onClick={Logout}>
+          Logout
+          </button>
+          <button className="" onClick={ShareTargetPicker}>
+          Share Target Picker
+          </button>
+          <button className="" onClick={Scan}>
+          Scan
+          </button>
+          <button className="" onClick={CustomAction}>
+          Custom Action
+          </button>
+          <button className="" onClick={ServiceMessage}>
+          Service Message
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
