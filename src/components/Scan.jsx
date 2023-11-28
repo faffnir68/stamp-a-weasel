@@ -19,27 +19,40 @@ function Scan() {
 }
 
 function updateContentFromJsonFile(userId) {
-    fetch('/scans.json')
+    fetch('/.netlify/functions/updateScans', {
+        method: 'GET', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
         .then(response => response.json())
         .then(data => {
-            const existingEntry = data.find(entry => userId === entry.id)
-            if(existingEntry) {
-                existingEntry.scanNb = (existingEntry.scanNb || 0) + 1
+            console.log('Data from updateScans:', data);
+
+            if (Array.isArray(data)) {
+                const existingEntry = data.find(entry => userId === entry.id);
+                if (existingEntry) {
+                    existingEntry.scanNb = (existingEntry.scanNb || 0) + 1;
+                } else {
+                    data.push({ userId: userId, scanNb: 1 });
+                }
+                writeDataToScansJson(data);
+                updateUserIdOnHomepage(data.map(entry => entry.scanNb).join(', '));
+            } else {
+                console.error('Invalid data format:', data);
+                alert('Error fetching or updating scans.json. Please try again.');
             }
-            else {
-                data.push({ userId: userId, scanNb: 1 })
-            }
-            writeDataToScansJson(data);
-            updateUserIdOnHomepage(data)
         })
         .catch(error => {
             console.error('Error fetching scans.json:', error);
+            alert('Error fetching or updating scans.json. Please try again.');
         });
 }
 
+
 function writeDataToScansJson(data) {
-    fetch('/scans.json', {
-        method: 'PUT',
+    fetch('/.netlify/functions/updateScans', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -48,6 +61,7 @@ function writeDataToScansJson(data) {
     .catch(err => {
         alert(`Error updating scans.json: ${err}`)
     })
+    console.log("Successfully update scans")
 }
 
 function updateUserIdOnHomepage(content) {
