@@ -5,22 +5,11 @@ function Scan() {
         liff
             .scanCodeV2()
             .then((result) => {
-                const userId = result.value;
-                fetch('https://spectacular-gingersnap-be0b01.netlify.app/addScan', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ userId }),
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    alert(data.message);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('An error occurred while adding the scan.');
-                });
+                const pageUrl = result.value;
+                const context = liff.getContext();
+                // updateUserIdOnHomepage(pageUrl, context.userId);
+                updateContentFromJsonFile(context.userId);
+
             })
             .error((err) => {
                 console.log(`Error : ${err}`)
@@ -28,6 +17,28 @@ function Scan() {
     } else {
         alert("scanCodeV2の利用にはログインが必要です。")
     }
+}
+
+function updateContentFromJsonFile(userId) {
+    fetch('/scans.json')
+        .then(response => response.json())
+        .then(data => {
+            const userIds = data.map(entry => entry.userId);
+            updateUserIdOnHomepage(userIds.join(', '));
+        })
+        .catch(error => {
+            console.error('Error fetching scans.json:', error);
+        });
+}
+
+function updateUserIdOnHomepage(url, userId) {
+    // Assuming you have a div with the id 'userIdDisplay'
+    const userIdDisplay = document.getElementById('userIdDisplay');
+
+    // Update the content of the div with the userId
+    userIdDisplay.textContent = `Content of scans.json: ${content}`;
+
+    console.log('Url displayed on the homepage successfully.');
 }
 
 export default Scan

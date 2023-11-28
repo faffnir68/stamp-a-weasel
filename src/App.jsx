@@ -46,6 +46,7 @@ function App() {
         </a>
 
       </div>
+      <div id="userIdDisplay"></div>
       <div className="test">
         <h2>Starting from nothing</h2>
         <div className="btn-list">
