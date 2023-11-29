@@ -13,6 +13,11 @@ import "./index.css";
 function App() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [scansContent, setScansContent] = useState("");
+
+  const handleScan= (scansContent => {
+    console.log(scansContent)
+  })
 
   useEffect(() => {
     liff
@@ -50,7 +55,7 @@ function App() {
       <div id="userIdDisplay"></div>
       <div className="test">
         <h2>Stamp A Weasel</h2>
-        <Stamps />
+        <Stamps scansContent={scansContent} />
         <div className="btn-list">
           <button className="" onClick={Login}>
           Login
@@ -61,7 +66,7 @@ function App() {
           <button className="" onClick={ShareTargetPicker}>
           Share Target Picker
           </button>
-          <button className="" onClick={Scan}>
+          <button className="" onClick={() => { Scan(); handleScan() }}>
           Scan
           </button>
           <button className="" onClick={CustomAction}>

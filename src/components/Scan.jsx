@@ -1,6 +1,7 @@
 import liff from "@line/liff";
 
 function Scan() {
+    
     if (liff.isLoggedIn()) {
         liff
             .scanCodeV2()
@@ -8,9 +9,8 @@ function Scan() {
                 const pageUrl = result.value;
                 const context = liff.getContext();
                 updateContentFromJsonFile(context.userId, pageUrl);
-
             })
-            .error((err) => {
+            .catch((err) => {
                 console.log(`Error : ${err}`)
             })
     } else {
@@ -30,15 +30,19 @@ function updateContentFromJsonFile(userId) {
             console.log('Data from updateScans:', data);
             
             if (Array.isArray(data)) {
+                console.log(data)
                 const existingEntry = data.find(entry => userId === entry.userId);
-                if (existingEntry) {
-                    existingEntry.scanNb = (existingEntry.scanNb || 0) + 1;
+                const existingIndex = data.findIndex(entry => userId === entry.userId);
+                if (existingIndex !== -1) {
+                    data[existingIndex].scanNb = (data[existingIndex].scanNb || 0) + 1;
                 } else {
                     data.push({ userId: userId, scanNb: 1 });
                 }
-                // deleteScans(data) // Activate it to reset the array
-                writeDataToScansJson(data);
-                updateUserIdOnHomepage(data.map(entry => entry.scanNb).join(', '));
+                const filteredData = data.filter(entry => entry.userId !== userId);
+                const updatedData = [...filteredData, existingEntry || { userId: userId, scanNb: 1 }];
+                // deleteScans(data);
+                updateScanNbOnHomepage(updatedData.map(entry => entry.scanNb).join(', '));
+                writeDataToScansJson(updatedData);
             } else {
                 console.error('Invalid data format:', data);
                 alert('Error fetching or updating scans.json. Please try again.');
@@ -79,7 +83,7 @@ function deleteScans(data) {
     console.log("Successfully delete scans")
 }
 
-function updateUserIdOnHomepage(content) {
+function updateScanNbOnHomepage(content) {
     const userIdDisplay = document.getElementById('userIdDisplay');
     userIdDisplay.textContent = `Content of scans.json: ${content}`;
     console.log('Content of scans.json displayed on the homepage successfully.');
