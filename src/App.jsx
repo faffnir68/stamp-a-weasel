@@ -6,6 +6,7 @@ import CustomAction from './components/CustomAction'
 import Scan from './components/Scan'
 import ServiceMessage from './components/ServiceMessage'
 import ShareTargetPicker from './components/ShareTargetPicker'
+import Stamps from "./components/Stamps";
 import "./App.css";
 import "./index.css";
 
@@ -48,7 +49,8 @@ function App() {
       </div>
       <div id="userIdDisplay"></div>
       <div className="test">
-        <h2>Starting from nothing</h2>
+        <h2>Stamp A Weasel</h2>
+        <Stamps />
         <div className="btn-list">
           <button className="" onClick={Login}>
           Login
