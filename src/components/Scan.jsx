@@ -28,14 +28,15 @@ function updateContentFromJsonFile(userId) {
         .then(response => response.json())
         .then(data => {
             console.log('Data from updateScans:', data);
-
+            
             if (Array.isArray(data)) {
-                const existingEntry = data.find(entry => userId === entry.id);
+                const existingEntry = data.find(entry => userId === entry.userId);
                 if (existingEntry) {
                     existingEntry.scanNb = (existingEntry.scanNb || 0) + 1;
                 } else {
                     data.push({ userId: userId, scanNb: 1 });
                 }
+                // deleteScans(data) // Activate it to reset the array
                 writeDataToScansJson(data);
                 updateUserIdOnHomepage(data.map(entry => entry.scanNb).join(', '));
             } else {
@@ -52,7 +53,7 @@ function updateContentFromJsonFile(userId) {
 
 function writeDataToScansJson(data) {
     fetch('/.netlify/functions/updateScans', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -62,6 +63,20 @@ function writeDataToScansJson(data) {
         alert(`Error updating scans.json: ${err}`)
     })
     console.log("Successfully update scans")
+}
+
+function deleteScans(data) {
+    fetch('/.netlify/functions/updateScans', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .catch(err => {
+        alert(`Error deleting scans.json: ${err}`)
+    })
+    console.log("Successfully delete scans")
 }
 
 function updateUserIdOnHomepage(content) {
