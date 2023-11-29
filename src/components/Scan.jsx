@@ -8,14 +8,25 @@ function Scan() {
             .then((result) => {
                 const pageUrl = result.value;
                 const context = liff.getContext();
-                updateContentFromJsonFile(context.userId, pageUrl);
+                if (isValidUrl(pageUrl)) {
+                    updateContentFromJsonFile(context.userId, pageUrl);
+                } else {
+                    console.log('Invalid URL:', pageUrl);
+                    alert('Invalid URL. Please scan a valid QR code.');
+                }
             })
             .catch((err) => {
-                console.log(`Error : ${err}`)
+                console.log(`Scancode failed : ${err}`)
             })
     } else {
         alert("scanCodeV2の利用にはログインが必要です。")
     }
+
+    function isValidUrl(url) {
+        return url.startsWith("https://spectacular-gingersnap-be0b01.netlify.app/addScan");
+    }
+
+
 }
 
 function updateContentFromJsonFile(userId) {
