@@ -1,7 +1,6 @@
 import liff from "@line/liff";
 
-function Scan() {
-    
+function Scan() {    
     if (liff.isLoggedIn()) {
         liff
             .scanCodeV2()
@@ -22,11 +21,11 @@ function Scan() {
         alert("scanCodeV2の利用にはログインが必要です。")
     }
 
-    function isValidUrl(url) {
-        return url.startsWith("https://spectacular-gingersnap-be0b01.netlify.app/addScan");
-    }
+    
+}
 
-
+function isValidUrl(url) {
+    return url.startsWith("https://spectacular-gingersnap-be0b01.netlify.app/addScan");
 }
 
 function updateContentFromJsonFile(userId) {
@@ -63,6 +62,7 @@ function updateContentFromJsonFile(userId) {
             console.error('Error fetching scans.json:', error);
             alert('Error fetching or updating scans.json. Please try again.');
         });
+
 }
 
 
@@ -99,5 +99,6 @@ function updateScanNbOnHomepage(content) {
     userIdDisplay.textContent = `Content of scans.json: ${content}`;
     console.log('Content of scans.json displayed on the homepage successfully.');
 }
+
 
 export default Scan

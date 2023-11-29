@@ -7,17 +7,19 @@ import Scan from './components/Scan'
 import ServiceMessage from './components/ServiceMessage'
 import ShareTargetPicker from './components/ShareTargetPicker'
 import Stamps from "./components/Stamps";
+import ScanButton from "./components/ScanButton";
 import "./App.css";
 import "./index.css";
 
 function App() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [scansContent, setScansContent] = useState("");
+  const [scanCounter, setScanCounter] = useState(0)
 
-  const handleScan= (scansContent => {
-    console.log(scansContent)
-  })
+  const increment = () => {
+    setScanCounter(scanCounter + 1)
+  }
+  console.log(scanCounter)
 
   useEffect(() => {
     liff
@@ -55,7 +57,7 @@ function App() {
       <div id="userIdDisplay"></div>
       <div className="test">
         <h2>Stamp A Weasel</h2>
-        <Stamps scansContent={scansContent} />
+        <Stamps scanCounter={scanCounter} />
         <div className="btn-list">
           <button className="" onClick={Login}>
           Login
@@ -66,9 +68,7 @@ function App() {
           <button className="" onClick={ShareTargetPicker}>
           Share Target Picker
           </button>
-          <button className="" onClick={() => { Scan(); handleScan() }}>
-          Scan
-          </button>
+          <ScanButton onPress={increment} scanCounter={scanCounter} />
           <button className="" onClick={CustomAction}>
           Custom Action
           </button>
