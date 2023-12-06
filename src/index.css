@@ -1,0 +1,83 @@
+.btn-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-direction: column;
+}
+.btn-list button {
+    border: 1px solid lightblue;
+    color: #2ec4b6;
+    background: #cbf3f0;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px;
+    display: block;
+}
+.stamp-card-container {
+    background: #ffbf69;
+    border: 1px solid #eee;
+    padding: 1rem;
+    max-width: 500px;
+    margin: 2rem auto;
+}
+.stamp-card {
+    border-radius: 10px;
+    /* background: rgba(226, 88, 34, 1); */
+    background: #ff9f1c;
+    padding: 1rem;
+}
+h3.stamp-card-header {
+    color: #ffbf69;
+    display: block;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 1rem 0 0 0;
+    padding: 1rem 0;
+    border: 1px solid #eee;
+}
+.stamps {
+    padding: 2rem;
+    border: 1px solid #eee;
+}
+.stamps ul {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(2,1fr);
+}
+.stamps ul li {
+    background: white;
+    border-radius: 50%;
+    list-style-type: none;
+    border: #aaa 1px solid;
+    width: 4rem;
+    height: 4rem;
+}
+@media screen and (min-width: 500px) {
+    .stamps ul {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+.stamps ul li.checked {
+    background: url("/weasel.png") no-repeat center center / cover;
+    overflow: hidden;
+}
+.stamps ul li.checked--first {
+    background: url("/weasel.png") no-repeat center center / cover;
+    overflow: hidden;
+    animation: zoom-in-zoom-out 0.9s ease-in forwards;
+}
+
+@keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(2.5, 2.5);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1, 1);
+      opacity: 1;
+    }
+  }
